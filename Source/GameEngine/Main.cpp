@@ -7,8 +7,8 @@
 int main()
 {
     bad::Renderer rend;
+    rend.Initialize("Window", 800, 800);
     
-
     SDL_Event e;
     bool quit = false;
 
@@ -21,7 +21,6 @@ int main()
                 quit = true;
             }
         }
-
 
         for (int i = 0; i < 1000; ++i) {
             rend.SetColor(rand() % 256, rand() % 256, rand() % 256);
