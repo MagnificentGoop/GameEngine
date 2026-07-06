@@ -1,40 +1,55 @@
-#include "SDL3/SDL.h"
 #include <Engine.h>
-
-#include <iostream>
 
 
 int main()
 {
+    //INITIALIZATION
     bad::Renderer rend;
-    rend.Initialize("Window", 800, 800);
-    
-    SDL_Event e;
-    bool quit = false;
+    bool quit = true;
+    int count = 0;
+    do {
+        quit = rend.Initialize("Window", 800, 800);
+        count++;
 
-    // Define a rectangle
-    SDL_FRect greenSquare{ 270, 190, 200, 200 };
+        if (count > 4) {
+            std::cerr << "SDL Could not create window or renderer too many times" << std::endl;
+            return 1;
+        }
+    } while (quit);
+
+    quit = false;
+
+    std::vector<bad::Vector2> v;
+
+    for (size_t i = 0; i < 300; i++)
+    {
+        v.push_back(bad::Vector2{ bad::RandomFloat(rend.GetWidth()), bad::RandomFloat(rend.GetHeight()) });
+    }
+
 
     while (!quit) {
-        while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_EVENT_QUIT) {
+        //UPDATE
+        SDL_Event event;
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_EVENT_QUIT) {
                 quit = true;
             }
         }
 
-        for (int i = 0; i < 1000; ++i) {
-            rend.SetColor(rand() % 256, rand() % 256, rand() % 256);
-            rend.DrawPoint(rand() % 1280, rand() % 1024);
+        for (size_t i = 0; i < v.size(); ++i) {
+            rend.SetColor(bad::RandomInt(256), bad::RandomInt(256), bad::RandomInt(256));
+            rend.DrawPoint(v.at(i).x, v.at(i).y); 
         }
 
+        //RENDER
+
         rend.SetColor(0, 255, 0, 255);
-        rend.DrawRect(&greenSquare);
 
         rend.SetColor(255, 255, 255, 255);
 
         rend.Render();
     }
-
+    //SHUTDOWN
     rend.Quit();
 
     return 0;

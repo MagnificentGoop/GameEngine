@@ -3,10 +3,17 @@
 
 namespace bad
 {
-    bool Renderer::Initialize(const char* name, int width, int height) {
+    /// <summary>
+    /// Initializes the render engine
+    /// </summary>
+    /// <param name="name">Name of the window made</param>
+    /// <param name="width">Width of the screen wanted</param>
+    /// <param name="height">Height of the screen wanted</param>
+    /// <returns>1 if error occoured</returns>
+    bool Renderer::Initialize(const char* name, float width, float height) {
         SDL_Init(SDL_INIT_VIDEO);
 
-        m_window = SDL_CreateWindow(name, 1280, 1024, 0);
+        m_window = SDL_CreateWindow(name, (int)width, (int)height, 0);
         if (m_window == nullptr) {
             std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
             SDL_Quit();
@@ -20,9 +27,16 @@ namespace bad
             SDL_Quit();
             return 1;
         }
+
+        m_size = new Vector2{ width, height };
+        
+        return 0;
 	}
     void Renderer::SetColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha){
         SDL_SetRenderDrawColor(m_renderer, red, green, blue, alpha);
+    }
+    void Renderer::SetColorFloat(float red, float green, float blue, float alpha) {
+        SDL_SetRenderDrawColorFloat(m_renderer, red, green, blue, alpha);
     }
 	void Renderer::Clear(){
         SDL_RenderClear(m_renderer);
@@ -44,7 +58,7 @@ namespace bad
     }
     void Renderer::DrawText(const char* text, float x, float y, int fontSize, const char* fontPath) {
 		if (fontPath == nullptr) {
-			fontPath = "C:\Windows\Fonts\Calibri\calibri.ttf"; // Default font path
+			fontPath = "C:/Windows/Fonts/Calibri/calibri.ttf"; // Default font path
 		}
 
 		SDL_RenderDebugText(m_renderer, x, y, text);
