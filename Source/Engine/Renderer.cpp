@@ -10,7 +10,7 @@ namespace bad
     /// <param name="width">Width of the screen wanted</param>
     /// <param name="height">Height of the screen wanted</param>
     /// <returns>1 if error occoured</returns>
-    bool Renderer::Initialize(const char* name, float width, float height) {
+    bool Renderer::Initialize(const char* name, const float width, const float height) {
         SDL_Init(SDL_INIT_VIDEO);
 
         m_window = SDL_CreateWindow(name, (int)width, (int)height, 0);
@@ -29,16 +29,47 @@ namespace bad
         }
 
         m_size = new Vector2{ width, height };
+
+        SDL_SetRenderVSync(m_renderer, 1);
         
         return 0;
 	}
-    void Renderer::SetColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha){
+    void Renderer::SetColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha){
         SDL_SetRenderDrawColor(m_renderer, red, green, blue, alpha);
     }
-    void Renderer::SetColorFloat(float red, float green, float blue, float alpha) {
-        SDL_SetRenderDrawColorFloat(m_renderer, red, green, blue, alpha);
+    void Renderer::SetBackgroundColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha) {
+        if (backgroundColor != nullptr) {
+            delete backgroundColor;
+            backgroundColor = nullptr;
+        }
+        backgroundColor = new Color8(red, green, blue, alpha);
     }
+
+    void Renderer::SetColor(Color8& c) {
+        SDL_SetRenderDrawColor(m_renderer, c.r, c.g, c.b, c.a);
+    }
+
+    void Renderer::SetBackgroundColor(Color8& c) {
+        if (backgroundColor != nullptr) {
+            delete backgroundColor;
+            backgroundColor = nullptr;
+        }
+        backgroundColor = new Color8(c.r, c.g, c.b, c.a);
+    }
+
+    void Renderer::SetColor(ColorF& c) {
+        backgroundColor = new Color8(c.MakeColor8());
+    }
+    void Renderer::SetBackgroundColor(ColorF& c) {
+        if (backgroundColor != nullptr) {
+            delete backgroundColor;
+            backgroundColor = nullptr;
+        }
+        backgroundColor = new Color8(c.MakeColor8());
+    }
+
 	void Renderer::Clear(){
+        SetColor(*backgroundColor);
         SDL_RenderClear(m_renderer);
     }
 	void Renderer::DrawPoint(float x, float y) {
