@@ -1,18 +1,18 @@
 #include "paint.h"
 namespace bad {
-	paint::paint() {
-		points = new std::vector<std::vector<bad::Vector2<float>*>*>();
-	}
+    paint::paint() {
+        points = new std::vector<std::vector<bad::Vector2<float>*>*>();
+    }
 
-	void paint::Update(bad::Input& input) {
+    void paint::Update(bad::Input& input) {
         if (input.GetButtonDown(bad::Input::LEFT)) {
             points->push_back(new std::vector<bad::Vector2<float>*>());
             points->back()->push_back(new bad::Vector2(input.GetMousePosition()));
         }
         else if (input.GetButtonPressed(bad::Input::LEFT)) {
-            if (points->back()->size() != 0) {
+            if (points->size() != 0 && points->back()->size() != 0) {
                 bad::Vector2<float> temp = input.GetMousePosition();
-                if (temp.Length(points->back()->back()) > 10.0f) {
+                if (temp.LengthBtwn(points->back()->back()) > 10.0f) {
                     points->back()->push_back(new bad::Vector2(input.GetMousePosition()));
                 }
             }
@@ -28,9 +28,22 @@ namespace bad {
                 delete points->at(i);
             }
             delete points;
-            points = new std::vector<std::vector<bad::Vector2<float>*>*>();
+                points = new std::vector<std::vector<bad::Vector2<float>*>*>();
         }
-	}
+
+        if (input.GetButtonDown(bad::Input::RIGHT)) {
+            if (points->size() != 0) {
+                if (points->back()->size() != 0) {
+                    for (int i = points->back()->size() - 1; i > -1; i--)
+                    {
+                        delete points->back()->at(i);
+                    }
+                }
+                delete points->back();
+                points->pop_back();
+            }
+        }
+    }
 
     void paint::Render(bad::Renderer& rend) {
         for (int i = 0; i < points->size(); i++)

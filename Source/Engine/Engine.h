@@ -3,6 +3,8 @@
 #include "Input.h"
 #include "Color.h"
 #include "Gametime.h"
+#include "MathUtils.h"
+#include "Actor.h"
 
 #include "Renderer.h"
 #include <iostream>

@@ -32,8 +32,8 @@ namespace bad
 
         SDL_SetRenderVSync(m_renderer, 1);
         
-        SetBackgroundColor(15, 15, 15);
-        SetColor(255, 40, 40);
+        SetBackgroundColor(0, 0, 0);
+        SetColor(255, 255, 255);
         return 0;
 	}
 
@@ -54,14 +54,14 @@ namespace bad
         }
         Color = new Color8(red, green, blue, alpha);
     }
-    void Renderer::SetColor(Color8& c) {
+    void Renderer::SetColor(const Color8& c) {
         if (Color != nullptr) {
             delete Color;
             Color = nullptr;
         }
         Color = new Color8(c.r, c.g, c.b, c.a);
     }
-    void Renderer::SetColor(ColorF& c) {
+    void Renderer::SetColor(const ColorF& c) {
         if (Color != nullptr) {
             delete Color;
             Color = nullptr;
@@ -76,14 +76,14 @@ namespace bad
         }
         backgroundColor = new Color8(red, green, blue, alpha);
     }
-    void Renderer::SetBackgroundColor(Color8& c) {
+    void Renderer::SetBackgroundColor(const Color8& c) {
         if (backgroundColor != nullptr) {
             delete backgroundColor;
             backgroundColor = nullptr;
         }
         backgroundColor = new Color8(c.r, c.g, c.b, c.a);
     }
-    void Renderer::SetBackgroundColor(ColorF& c) {
+    void Renderer::SetBackgroundColor(const ColorF& c) {
         if (backgroundColor != nullptr) {
             delete backgroundColor;
             backgroundColor = nullptr;

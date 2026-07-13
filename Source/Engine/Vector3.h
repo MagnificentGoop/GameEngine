@@ -36,8 +36,16 @@ namespace bad {
 		Vector3<T>& operator /= (const T i) { this->x /= i; this->y /= i; this->z /= i; }
 
 		bool operator==(const Vector3<T>& v) const { return (this->x == v.x && this->y == v.y && this->z == v.z); }
+		bool operator>(const Vector3<T>& v) const { return (this->x > v.x && this->y > v.y && this->z > v.z); }
+		bool operator<(const Vector3<T>& v) const { return (this->x < v.x && this->y < v.y && this->z < v.z); }
 
 		template<typename U>
 		explicit operator Vector3<U>() const { return Vector3<U>(static_cast<U>(x), static_cast<U>(y), static_cast<U>(z)); }
+
+		T LengthSqr() const { return (x * x) + (y * y) + (z * z); }
+		T Length() const { return std::sqrt(LengthSqr()); }
+
+		Vector3 Normalized() const { return *this / Length(); }
+		T Dot(const Vector3<T>& v) const { return ((x * v.x) + (y * v.y) + (z * v.z)); }
 	};
 }

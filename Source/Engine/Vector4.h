@@ -39,6 +39,8 @@ namespace bad {
 		Vector4& operator /= (const T& i) { this->x /= i; this->y /= i; this->b /= i; this->a /= i; return *this; }
 
 		bool operator==(const Vector4<T>& v) const { return (this->x == v.x && this->y == v.y && this->z == v.z && this->w == v.w); }
+		bool operator>(const Vector4<T>& v) const { return (this->x > v.x && this->y > v.y && this->z > v.z && this->w > v.w); }
+		bool operator<(const Vector4<T>& v) const { return (this->x < v.x && this->y < v.y && this->z < v.z && this->w < v.w); }
 
 		template<typename U>
 		explicit operator Vector4<U>() const { return Vector4<U>(static_cast<U>(x), static_cast<U>(y), static_cast<U>(z), static_cast<U>(w)); }

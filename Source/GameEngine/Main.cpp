@@ -1,5 +1,5 @@
 //#include <Engine.h> //temporarily commented out
-#include "paint.h"
+#include "paint.h" // temporary
 
 int main()
 {

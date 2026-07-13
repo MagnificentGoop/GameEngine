@@ -6,23 +6,23 @@ namespace bad
 {
 	class Renderer {
 		public:
-			inline const float GetWidth() { 
+			inline const float GetWidth() const{ 
 				return m_size->x;
 			}
-			inline const float GetHeight() { 
+			inline const float GetHeight() const{ 
 				return m_size->y;
 			}
-			inline const Vector2<float> GetSize() { 
+			inline const Vector2<float> GetSize() const{ 
 				return Vector2{ m_size->x, m_size->y }; 
 			}
 
 			bool Initialize(const char* name, const float width, const float height);
 			void SetColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha = 255);
 			void SetBackgroundColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha = 255);
-			void SetColor(Color8& c);
-			void SetBackgroundColor(Color8& c);
-			void SetColor(ColorF& c);
-			void SetBackgroundColor(ColorF& c);
+			void SetColor(const Color8& c);
+			void SetBackgroundColor(const Color8& c);
+			void SetColor(const ColorF& c);
+			void SetBackgroundColor(const ColorF& c);
 
 			void SetTempColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha = 255);
 			void SetTempColor(Color8& c);
