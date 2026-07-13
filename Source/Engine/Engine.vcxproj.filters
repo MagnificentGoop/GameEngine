@@ -26,6 +26,9 @@
     <ClCompile Include="Gametime.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="paint.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -68,6 +71,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Gametime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="paint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -34,7 +34,14 @@ namespace bad {
 		Vector2<T>& operator *= (const T& i) { this->x *= i; this->y *= i; return *this; }
 		Vector2<T>& operator /= (const T& i) { this->x /= i; this->y /= i; return *this; }
 
-		float LengthSqr() const { return (x * x) + (y * y); }
-		float Length() const { return std::sqrt(LengthSqr()); }
+		bool operator==(const Vector2<T>& v) const { return (this->x == v.x && this->y == v.y); }
+		bool operator>(const Vector2<T>& v) const { return (this->x > v.x && this->y > v.y); }
+		bool operator<(const Vector2<T>& v) const { return (this->x < v.x && this->y < v.y); }
+
+		template<typename U>
+		explicit operator Vector2<U>() const {return Vector2<U>(static_cast<U>(x), static_cast<U>(y)); }
+
+		float LengthSqr(const Vector2<T>& v) const { return (v.x - x) * (v.x - x) + (v.y - y) * (v.y - y); }
+		float Length(const Vector2<T>& v) const { return std::sqrt(LengthSqr(v)); }
 	};
 }

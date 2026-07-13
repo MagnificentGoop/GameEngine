@@ -32,11 +32,43 @@ namespace bad
 
         SDL_SetRenderVSync(m_renderer, 1);
         
+        SetBackgroundColor(15, 15, 15);
+        SetColor(255, 40, 40);
         return 0;
 	}
-    void Renderer::SetColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha){
+
+    void Renderer::SetTempColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha){
         SDL_SetRenderDrawColor(m_renderer, red, green, blue, alpha);
     }
+    void Renderer::SetTempColor(Color8& c) {
+        SDL_SetRenderDrawColor(m_renderer, c.r, c.g, c.b, c.a);
+    }
+    void Renderer::SetTempColor(ColorF& c) {
+        SDL_SetRenderDrawColor(m_renderer, c.r, c.g, c.b, c.a);
+    }
+
+    void Renderer::SetColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha) {
+        if (Color != nullptr) {
+            delete Color;
+            Color = nullptr;
+        }
+        Color = new Color8(red, green, blue, alpha);
+    }
+    void Renderer::SetColor(Color8& c) {
+        if (Color != nullptr) {
+            delete Color;
+            Color = nullptr;
+        }
+        Color = new Color8(c.r, c.g, c.b, c.a);
+    }
+    void Renderer::SetColor(ColorF& c) {
+        if (Color != nullptr) {
+            delete Color;
+            Color = nullptr;
+        }
+        Color = new Color8(c.r, c.g, c.b, c.a);
+    }
+
     void Renderer::SetBackgroundColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha) {
         if (backgroundColor != nullptr) {
             delete backgroundColor;
@@ -44,21 +76,12 @@ namespace bad
         }
         backgroundColor = new Color8(red, green, blue, alpha);
     }
-
-    void Renderer::SetColor(Color8& c) {
-        SDL_SetRenderDrawColor(m_renderer, c.r, c.g, c.b, c.a);
-    }
-
     void Renderer::SetBackgroundColor(Color8& c) {
         if (backgroundColor != nullptr) {
             delete backgroundColor;
             backgroundColor = nullptr;
         }
         backgroundColor = new Color8(c.r, c.g, c.b, c.a);
-    }
-
-    void Renderer::SetColor(ColorF& c) {
-        backgroundColor = new Color8(c.MakeColor8());
     }
     void Renderer::SetBackgroundColor(ColorF& c) {
         if (backgroundColor != nullptr) {
@@ -69,13 +92,15 @@ namespace bad
     }
 
 	void Renderer::Clear(){
-        SetColor(*backgroundColor);
+        SetTempColor(*backgroundColor);
         SDL_RenderClear(m_renderer);
     }
 	void Renderer::DrawPoint(float x, float y) {
+        ChangeCurrentColor();
 		SDL_RenderPoint(m_renderer, x, y);
 	}
     void Renderer::DrawRect(float x, float y, float width, float height, bool shouldFill) {
+        ChangeCurrentColor();
 		SDL_FRect rect{ x, y, width, height };
         if (shouldFill) {
 			SDL_RenderFillRect(m_renderer, &rect);
@@ -85,13 +110,14 @@ namespace bad
         }
     }
     void Renderer::DrawLine(float x1, float y1, float x2, float y2) {
+        ChangeCurrentColor();
 		SDL_RenderLine(m_renderer, x1, y1, x2, y2);
     }
     void Renderer::DrawText(const char* text, float x, float y, int fontSize, const char* fontPath) {
 		if (fontPath == nullptr) {
 			fontPath = "C:/Windows/Fonts/Calibri/calibri.ttf"; // Default font path
 		}
-
+        ChangeCurrentColor();
 		SDL_RenderDebugText(m_renderer, x, y, text);
     }
     void Renderer::Render() {

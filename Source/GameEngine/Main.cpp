@@ -1,17 +1,17 @@
-#include <Engine.h>
-
+//#include <Engine.h> //temporarily commented out
+#include "paint.h"
 
 int main()
 {
     //INITIALIZATION/*
     bad::Renderer rend;
-    rend.SetBackgroundColor(15,15,15); // you NEED to set this initially
+
 
 //Initilazing window
     bool quit = true;
-    for (int count = 0; count < 5; count++)
+    for (int count = 0; count < 6; count++)
     {
-        quit = rend.Initialize("Window", 800, 800);;
+        quit = rend.Initialize("Window", 1920, 1080);;
 
         if (count > 4) {
             std::cerr << "SDL failed to create windows multiple times" << std::endl;
@@ -22,28 +22,14 @@ int main()
             break;
         }
     }
-    
-//Initializing input object
+
+    //Initializing input object
     bad::Input input;
     input.Initialize();
 
     bad::Time time;
 
-    //rendering assignment
-    std::vector<bad::Vector2<int>> dots;
-    std::vector<bad::Vector4<int>> lines;
-
-    //dots.push_back(bad::Vector2(rend.GetWidth() + 5, rend.GetHeight() + 5));
-    //lines.push_back(bad::Vector4((rend.GetWidth() + 5.0f), (rend.GetHeight() + 5.0f), -5.0f -5.0f));
-    for (int i = 0; i < 201; i++)
-    {
-        dots.push_back(bad::Vector2(bad::RandomInt(rend.GetWidth()), bad::RandomInt(rend.GetHeight())));
-    }
-    for (int i = 0; i < 31; i++)
-    {
-        lines.push_back(bad::Vector4(bad::RandomInt(rend.GetWidth()), bad::RandomInt(rend.GetHeight()), bad::RandomInt(rend.GetWidth()), bad::RandomInt(rend.GetHeight())));
-    }
-    //rendering assignment
+    bad::paint paint; //Temporary paint class that holds paint functions
 
     //INITIALIZATION*/
 
@@ -56,23 +42,12 @@ int main()
                 quit = true;
             }
         }
-
         input.Update();
-
-        //rendering assignment
-        for (size_t i = 0; i < dots.size(); i++)
-        {
-            rend.SetColor(255, 40, 40);
-            rend.DrawPoint(dots.at(i).x, dots.at(i).y);
-        }
-        for (size_t i = 0; i < lines.size(); i++)
-        {
-            rend.DrawLine(lines.at(i).x, lines.at(i).y, lines.at(i).z, lines.at(i).w);
-        }
-        //rendering assignment 
+        paint.Update(input); //Temporary 
         //UPDATE/*
 
         //RENDER*/
+        paint.Render(rend); //Temporary 
         rend.Render();
         //RENDER/*
     }
