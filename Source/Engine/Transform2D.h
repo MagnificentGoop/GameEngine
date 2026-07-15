@@ -1,9 +1,9 @@
 #pragma once
-#include "Vector4.h"
+#include "Vector2.h"
 namespace bad {
-	struct Transform {
+	struct Transform2D {
 		Vector2<float> position;
 		float rotation;
-		float scale;
+		Vector2<float> scale;
 	};
 }

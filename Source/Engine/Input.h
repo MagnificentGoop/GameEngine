@@ -23,13 +23,13 @@ namespace bad {
 		bool GetKeyPressed(int key) const { return m_keyStates[key]; }
 		bool GetPrevKeyPressed(int key) const { return m_prevKeyStates[key]; }
 		bool GetKeyDown(int key) const { return !m_prevKeyStates[key] && m_keyStates[key]; }
-		bool GetKeyReleased(int key) const { return m_prevKeyStates[key] && !m_keyStates[key]; }
+		bool GetKeyUp(int key) const { return m_prevKeyStates[key] && !m_keyStates[key]; }
 
 
 		bool GetButtonPressed(MouseButton button) const { return m_buttonStates & GetButtonBit(button); }
 		bool GetPrevButtonPressed(MouseButton button) const { return m_prevButtonStates & GetButtonBit(button); }
 		bool GetButtonDown(MouseButton button) const { return !GetPrevButtonPressed(button) && GetButtonPressed(button); }
-		bool GetButtonReleased(MouseButton button) const { return GetPrevButtonPressed(button) && !GetButtonPressed(button); }
+		bool GetButtonUp(MouseButton button) const { return GetPrevButtonPressed(button) && !GetButtonPressed(button); }
 
 		Vector2<float> GetMousePosition() { return m_mousePosition; }
 	private:

@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
-#include "Color.h"
+#include "Model.h"
+#include "Transform2D.h"
 
 namespace bad
 {
@@ -17,47 +18,43 @@ namespace bad
 			}
 
 			bool Initialize(const char* name, const float width, const float height);
-			void SetColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha = 255);
-			void SetBackgroundColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha = 255);
-			void SetColor(const Color8& c);
+
+			void SetBackgroundColor(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t alpha = 255);
 			void SetBackgroundColor(const Color8& c);
-			void SetColor(const ColorF& c);
 			void SetBackgroundColor(const ColorF& c);
 
-			void SetTempColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha = 255);
-			void SetTempColor(Color8& c);
-			void SetTempColor(ColorF& c);
+			void SetColor(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t alpha = 255) const;
+			void SetColor(const Color8& c) const;
+			void SetColor(const ColorF& c) const;
 
 			void Clear();
 
-			void DrawPoint(const float x, const float y);
-			void DrawPoint(const Vector2<float>& p) {
-				DrawPoint(p.x, p.y);
+			void DrawPoint(const float x, const float y, const Color8 c) const;
+			void DrawPoint(const Vector2<float>& p, const Color8 c) const{
+				DrawPoint(p.x, p.y, c);
 			}
 
-			void DrawRect(const float x, const float y, const float width, const float height, const bool shouldFill = false);
-			void DrawRect(const Vector4<float>& rect, const bool shouldFill = false) {
-				DrawRect(rect.x, rect.y, rect.w, rect.w, shouldFill);
+			void DrawRect(const float x, const float y, const float width, const float height, const Color8 c, const bool shouldFill = false) const;
+			void DrawRect(const Vector4<float>& rect, const Color8 c, const bool shouldFill = false) const{
+				DrawRect(rect.x, rect.y, rect.w, rect.w, c, shouldFill);
 			};
-			void DrawRect(const Vector3<float>& rect, const bool shouldFill = false) {
-				DrawRect(rect.x, rect.y, rect.s, rect.s);
+			void DrawRect(const Vector3<float>& rect, const Color8 c, const bool shouldFill = false) {
+				DrawRect(rect.x, rect.y, rect.s, rect.s, c, shouldFill);
 			}
 
-			void DrawLine(const float x1, const float y1, const float x2, const float y2);
-			void DrawLine(const Vector4<float>& l) {
-				DrawLine(l.x, l.y, l.z, l.w);
+			void DrawLine(const float x1, const float y1, const float x2, const float y2, const Color8 c) const;
+			void DrawLine(const Vector4<float>& l, const Color8 c) const{DrawLine(l.x, l.y, l.z, l.w, c);}
+			void DrawLine(const Vector2<float>& pointA, const Vector2<float>& pointB, const Color8 c) const {DrawLine(pointA.x, pointA.y, pointB.x, pointB.y, c);}
+
+			void DrawText(const char* text, const float x, const float y, const Color8 c, const int fontSize = 32, const char* fontPath = nullptr) const;
+			void DrawText(const char* text, const Vector2<float>& p, const Color8 c, const int fontSize = 32, const char* fontPath = nullptr) const {
+				DrawText(text, p.x, p.y, c, fontSize, fontPath);
 			}
-			void DrawLine(const Vector2<float>& pointA, const Vector2<float>& pointB) {
-				DrawLine(pointA.x, pointA.y, pointB.x, pointB.y);
+			void DrawText(const char* text, const Vector3<float>& v, const Color8 c, const char* fontPath = nullptr) const {
+				DrawText(text, v.x, v.y, c, v.s, fontPath);
 			}
 
-			void DrawText(const char* text, const float x, const float y, const int fontSize = 32, const char* fontPath = nullptr);
-			void DrawText(const char* text, const Vector2<float>& p, const int fontSize = 32, const char* fontPath = nullptr) {
-				DrawText(text, p.x, p.y, fontSize, fontPath);
-			}
-			void DrawText(const char* text, const Vector3<float>& v, const char* fontPath = nullptr) {
-				DrawText(text, v.x, v.y, v.s, fontPath);
-			}
+			void DrawModel(const Model& model, const Transform2D& transform) const;
 
 			void Render();
 			void DestroyRenderer();
@@ -65,17 +62,13 @@ namespace bad
 			void Quit();
 
 	private:
-		void ChangeCurrentColor() {
-			if (!tempColor) SDL_SetRenderDrawColor(m_renderer, Color->r, Color->g, Color->b, Color->a);
-		}
 
 		private:
 			SDL_Window* m_window = nullptr;
 			SDL_Renderer* m_renderer = nullptr;
 			Vector2<float>* m_size = nullptr;
 
-			Color8* backgroundColor = nullptr;
-			Color8* Color = nullptr;
-			bool tempColor = false;
+			Color8* m_backgroundColor = nullptr;
+			bool m_tempColor = false;
 	};
 }

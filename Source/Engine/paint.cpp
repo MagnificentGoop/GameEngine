@@ -1,4 +1,5 @@
-#include "paint.h"
+#include "Paint.h"
+#include "Random.h"
 namespace bad {
     paint::paint() {
         points = new std::vector<std::vector<bad::Vector2<float>*>*>();
@@ -51,7 +52,7 @@ namespace bad {
             for (int j = 1; j < points->at(i)->size(); j++)
             {
                 rend.SetColor(bad::RandomInt(255), bad::RandomInt(255), bad::RandomInt(255));
-                rend.DrawLine(points->at(i)->at((j - 1)), points->at(i)->at(j));
+                rend.DrawLine(points->at(i)->at((j - 1)), points->at(i)->at(j), Color8(255,255,255));
             }
         }
     }

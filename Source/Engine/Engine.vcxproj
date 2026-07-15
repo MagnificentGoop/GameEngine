@@ -150,7 +150,7 @@
     </ClCompile>
     <ClCompile Include="Gametime.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="paint.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,13 +162,13 @@
     <ClInclude Include="Gametime.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="MathUtils.h" />
-    <ClInclude Include="paint.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="Shapes.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="Vector.h" />
+    <ClInclude Include="Transform2D.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vector4.h" />

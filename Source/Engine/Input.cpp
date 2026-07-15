@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "Input.h"
 
-#include <SDL3/SDL.h>
-
 namespace bad{
 	bool Input::Initialize() 
 	{
@@ -19,6 +17,7 @@ namespace bad{
 	void Input::Shutdown() 
 	{
 		//USELESS
+
 	}
 
 	void Input::Update() 

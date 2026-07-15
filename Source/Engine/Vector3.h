@@ -8,34 +8,38 @@ namespace bad {
 
 		union {
 			struct { T x; T y; T z; }; //position
-			struct { T x; T y; T s; }; //position and size
+			struct { T posX; T posY; T s; }; //position and size
 		};
 
 		Vector3<T>(T x = 0, T y = 0, T z = 0) : x{ x }, y{ y }, z { z } {};
-		Vector3<T>(const Vector2<T>* v, T z = 0) : Vector3(v->x,v->y), z{ z } {};
+		Vector3<T>(const Vector2<T>* v, T z = 0) : Vector3(v->x,v->y,z) {};
 		Vector3<T>(const Vector3<T>* v) : x{ v->x }, y{ v->y }, z{ v->z } {};
 
-		Vector3<T> operator + (const Vector3<T>& v) const { return Vector3<T>(this->x + v.x, this->y + v.y, this->z + v.z); }
-		Vector3<T> operator - (const Vector3<T>& v) const { return Vector3<T>(this->x - v.x, this->y - v.y, this->z - v.z); }
-		Vector3<T> operator * (const Vector3<T>& v) const { return Vector3<T>(this->x * v.x, this->y * v.y, this->z * v.z); }
-		Vector3<T> operator / (const Vector3<T>& v) const { return Vector3<T>(this->x / v.x, this->y / v.y, this->z / v.z); }
+		T operator[] (unsigned int i) const { assert(i < 3); return (&x)[i]; };
+		T& operator[] (unsigned int i) { assert(i < 3); return (&x)[i]; };
 
-		Vector3<T> operator + (const T& i) const { return Vector3<T>(this->x + i, this->y + i, this->z + i); }
-		Vector3<T> operator - (const T& i) const { return Vector3<T>(this->x - i, this->y - i, this->z - i); }
-		Vector3<T> operator * (const T& i) const { return Vector3<T>(this->x * i, this->y * i, this->z * i); }
-		Vector3<T> operator / (const T& i) const { return Vector3<T>(this->x / i, this->y / i, this->z / i); }
+		Vector3 operator + (const Vector3<T>& v) const { return Vector3<T>(this->x + v.x, this->y + v.y, this->z + v.z); }
+		Vector3 operator - (const Vector3<T>& v) const { return Vector3<T>(this->x - v.x, this->y - v.y, this->z - v.z); }
+		Vector3 operator * (const Vector3<T>& v) const { return Vector3<T>(this->x * v.x, this->y * v.y, this->z * v.z); }
+		Vector3 operator / (const Vector3<T>& v) const { return Vector3<T>(this->x / v.x, this->y / v.y, this->z / v.z); }
 
-		Vector3<T>& operator += (const Vector3<T>& v) { this->x += v.x; this->y += v.y; this->z += v.z; }
-		Vector3<T>& operator -= (const Vector3<T>& v) { this->x -= v.x; this->y -= v.y; this->z -= v.z; }
-		Vector3<T>& operator *= (const Vector3<T>& v) { this->x *= v.x; this->y *= v.y; this->z *= v.z; }
-		Vector3<T>& operator /= (const Vector3<T>& v) { this->x /= v.x; this->y /= v.y; this->z /= v.z; }
+		Vector3 operator + (const T& i) const { return Vector3<T>(this->x + i, this->y + i, this->z + i); }
+		Vector3 operator - (const T& i) const { return Vector3<T>(this->x - i, this->y - i, this->z - i); }
+		Vector3 operator * (const T& i) const { return Vector3<T>(this->x * i, this->y * i, this->z * i); }
+		Vector3 operator / (const T& i) const { return Vector3<T>(this->x / i, this->y / i, this->z / i); }
 
-		Vector3<T>& operator += (const T i) { this->x += i; this->y += i; this->z += i; }
-		Vector3<T>& operator -= (const T i) { this->x -= i; this->y -= i; this->z -= i; }
-		Vector3<T>& operator *= (const T i) { this->x *= i; this->y *= i; this->z *= i; }
-		Vector3<T>& operator /= (const T i) { this->x /= i; this->y /= i; this->z /= i; }
+		Vector3& operator += (const Vector3<T>& v) { this->x += v.x; this->y += v.y; this->z += v.z; return *this; }
+		Vector3& operator -= (const Vector3<T>& v) { this->x -= v.x; this->y -= v.y; this->z -= v.z; return *this; }
+		Vector3& operator *= (const Vector3<T>& v) { this->x *= v.x; this->y *= v.y; this->z *= v.z; return *this; }
+		Vector3& operator /= (const Vector3<T>& v) { this->x /= v.x; this->y /= v.y; this->z /= v.z; return *this;}
+
+		Vector3& operator += (const T i) { this->x += i; this->y += i; this->z += i; return *this;}
+		Vector3& operator -= (const T i) { this->x -= i; this->y -= i; this->z -= i; return *this;}
+		Vector3& operator *= (const T i) { this->x *= i; this->y *= i; this->z *= i; return *this;}
+		Vector3& operator /= (const T i) { this->x /= i; this->y /= i; this->z /= i; return *this;}
 
 		bool operator==(const Vector3<T>& v) const { return (this->x == v.x && this->y == v.y && this->z == v.z); }
+		bool operator!=(const Vector3<T>& v) const { return (this->x == v.x && this->y != v.y || this->z != v.z); }
 		bool operator>(const Vector3<T>& v) const { return (this->x > v.x && this->y > v.y && this->z > v.z); }
 		bool operator<(const Vector3<T>& v) const { return (this->x < v.x && this->y < v.y && this->z < v.z); }
 

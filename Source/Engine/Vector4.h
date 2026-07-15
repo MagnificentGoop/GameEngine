@@ -16,33 +16,41 @@ namespace bad {
 		Vector4<T>(const Vector3<T>* v, T w = 0) : Vector4(v->x, v->y, v->z, w) {};
 		Vector4<T>(const Vector4<T>* v) : x{ v->x }, y{ v->y }, z{ v->z }, w{ v->w } {};
 
-		void SetValues(T x, T y, T z, T w = 0);
+		T operator[] (unsigned int i) const { assert(i < 4); return (&x)[i]; };
+		T& operator[] (unsigned int i) { assert(i < 4); return (&x)[i]; };
 
-		Vector4 operator + (const Vector4<T>& v) const { return Vector4<T>(this->r + v.r, this->g + v.g, this->b + v.b, this->a + v.a); }
-		Vector4 operator - (const Vector4<T>& v) const { return Vector4<T>(this->r - v.r, this->g - v.g, this->b - v.b, this->a - v.a); }
-		Vector4 operator * (const Vector4<T>& v) const { return Vector4<T>(this->r * v.r, this->g * v.g, this->b * v.b, this->a * v.a); }
-		Vector4 operator / (const Vector4<T>& v) const { return Vector4<T>(this->r / v.r, this->g / v.g, this->b / v.b, this->a / v.a); }
+		Vector4 operator + (const Vector4<T>& v) const { return Vector4<T>(this->r + v.r, this->g + v.g, this->z + v.z, this->w + v.w); }
+		Vector4 operator - (const Vector4<T>& v) const { return Vector4<T>(this->r - v.r, this->g - v.g, this->z - v.z, this->w - v.w); }
+		Vector4 operator * (const Vector4<T>& v) const { return Vector4<T>(this->r * v.r, this->g * v.g, this->z * v.z, this->w * v.w); }
+		Vector4 operator / (const Vector4<T>& v) const { return Vector4<T>(this->r / v.r, this->g / v.g, this->z / v.z, this->w / v.w); }
 
-		Vector4 operator + (const T& i) const { return Vector4(this->r + i, this->g + i, this->b + i, this->a + i); }
-		Vector4 operator - (const T& i) const { return Vector4(this->r - i, this->g - i, this->b - i, this->a - i); }
-		Vector4 operator * (const T& i) const { return Vector4(this->r * i, this->g * i, this->b * i, this->a * i); }
-		Vector4 operator / (const T& i) const { return Vector4(this->r / i, this->g / i, this->b / i, this->a / i); }
+		Vector4 operator + (const T& i) const { return Vector4(this->r + i, this->g + i, this->z + i, this->w + i); }
+		Vector4 operator - (const T& i) const { return Vector4(this->r - i, this->g - i, this->z - i, this->w - i); }
+		Vector4 operator * (const T& i) const { return Vector4(this->r * i, this->g * i, this->z * i, this->w * i); }
+		Vector4 operator / (const T& i) const { return Vector4(this->r / i, this->g / i, this->z / i, this->w / i); }
 
-		Vector4& operator += (const Vector4<T>& v) { this->x += v.x; this->y += v.y; this->b += v.b; this->a += v.a; return *this; }
-		Vector4& operator -= (const Vector4<T>& v) { this->x -= v.x; this->y -= v.y; this->b -= v.b; this->a -= v.a; return *this; }
-		Vector4& operator *= (const Vector4<T>& v) { this->x *= v.x; this->y *= v.y; this->b *= v.b; this->a *= v.a; return *this; }
-		Vector4& operator /= (const Vector4<T>& v) { this->x /= v.x; this->y /= v.y; this->b /= v.b; this->a /= v.a; return *this; }
+		Vector4& operator += (const Vector4<T>& v) { this->x += v.x; this->y += v.y; this->z += v.z; this->w += v.w; return *this; }
+		Vector4& operator -= (const Vector4<T>& v) { this->x -= v.x; this->y -= v.y; this->z -= v.z; this->w -= v.w; return *this; }
+		Vector4& operator *= (const Vector4<T>& v) { this->x *= v.x; this->y *= v.y; this->z *= v.z; this->w *= v.w; return *this; }
+		Vector4& operator /= (const Vector4<T>& v) { this->x /= v.x; this->y /= v.y; this->z /= v.z; this->w /= v.w; return *this; }
 
-		Vector4& operator += (const T& i) { this->x += i; this->y += i; this->b += i; this->a += i; return *this; }
-		Vector4& operator -= (const T& i) { this->x -= i; this->y -= i; this->b -= i; this->a -= i; return *this; }
-		Vector4& operator *= (const T& i) { this->x *= i; this->y *= i; this->b *= i; this->a *= i; return *this; }
-		Vector4& operator /= (const T& i) { this->x /= i; this->y /= i; this->b /= i; this->a /= i; return *this; }
+		Vector4& operator += (const T& i) { this->x += i; this->y += i; this->z += i; this->w += i; return *this; }
+		Vector4& operator -= (const T& i) { this->x -= i; this->y -= i; this->z -= i; this->w -= i; return *this; }
+		Vector4& operator *= (const T& i) { this->x *= i; this->y *= i; this->z *= i; this->w *= i; return *this; }
+		Vector4& operator /= (const T& i) { this->x /= i; this->y /= i; this->z /= i; this->w /= i; return *this; }
 
 		bool operator==(const Vector4<T>& v) const { return (this->x == v.x && this->y == v.y && this->z == v.z && this->w == v.w); }
+		bool operator!=(const Vector4<T>& v) const { return (this->x != v.x && this->y == v.y && this->z != v.z || this->w == v.w); }
 		bool operator>(const Vector4<T>& v) const { return (this->x > v.x && this->y > v.y && this->z > v.z && this->w > v.w); }
 		bool operator<(const Vector4<T>& v) const { return (this->x < v.x && this->y < v.y && this->z < v.z && this->w < v.w); }
 
 		template<typename U>
 		explicit operator Vector4<U>() const { return Vector4<U>(static_cast<U>(x), static_cast<U>(y), static_cast<U>(z), static_cast<U>(w)); }
+
+		T LengthSqr() const { return (x * x) + (y * y) + (z * z) + (w * w); }
+		T Length() const { return std::sqrt(LengthSqr()); }
+
+		Vector4 Normalized() const { return *this / Length(); }
+		T Dot(const Vector4<T>& v) const { return ((x * v.x) + (y * v.y) + (z * v.z) + (w * v.w)); }
 	};
 }

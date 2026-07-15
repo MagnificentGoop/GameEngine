@@ -1,5 +1,4 @@
 #include "Gametime.h"
-#include <SDL3/SDL.h>
 namespace bad {
 	Time::Time() {
 		Reset();

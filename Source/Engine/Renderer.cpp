@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Renderer.h"
+#include "MathUtils.h"
 
 namespace bad
 {
@@ -33,74 +34,52 @@ namespace bad
         SDL_SetRenderVSync(m_renderer, 1);
         
         SetBackgroundColor(0, 0, 0);
-        SetColor(255, 255, 255);
         return 0;
 	}
 
-    void Renderer::SetTempColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha){
+    void Renderer::SetColor(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t alpha) const{
         SDL_SetRenderDrawColor(m_renderer, red, green, blue, alpha);
     }
-    void Renderer::SetTempColor(Color8& c) {
+    void Renderer::SetColor(const Color8& c) const {
         SDL_SetRenderDrawColor(m_renderer, c.r, c.g, c.b, c.a);
     }
-    void Renderer::SetTempColor(ColorF& c) {
+    void Renderer::SetColor(const ColorF& c) const{
         SDL_SetRenderDrawColor(m_renderer, c.r, c.g, c.b, c.a);
     }
 
-    void Renderer::SetColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha) {
-        if (Color != nullptr) {
-            delete Color;
-            Color = nullptr;
-        }
-        Color = new Color8(red, green, blue, alpha);
-    }
-    void Renderer::SetColor(const Color8& c) {
-        if (Color != nullptr) {
-            delete Color;
-            Color = nullptr;
-        }
-        Color = new Color8(c.r, c.g, c.b, c.a);
-    }
-    void Renderer::SetColor(const ColorF& c) {
-        if (Color != nullptr) {
-            delete Color;
-            Color = nullptr;
-        }
-        Color = new Color8(c.r, c.g, c.b, c.a);
-    }
 
-    void Renderer::SetBackgroundColor(const Uint8 red, const Uint8 green, const Uint8 blue, const Uint8 alpha) {
-        if (backgroundColor != nullptr) {
-            delete backgroundColor;
-            backgroundColor = nullptr;
+    void Renderer::SetBackgroundColor(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t alpha) {
+        if (m_backgroundColor != nullptr) {
+            delete m_backgroundColor;
+            m_backgroundColor = nullptr;
         }
-        backgroundColor = new Color8(red, green, blue, alpha);
+        m_backgroundColor = new Color8(red, green, blue, alpha);
     }
     void Renderer::SetBackgroundColor(const Color8& c) {
-        if (backgroundColor != nullptr) {
-            delete backgroundColor;
-            backgroundColor = nullptr;
+        if (m_backgroundColor != nullptr) {
+            delete m_backgroundColor;
+            m_backgroundColor = nullptr;
         }
-        backgroundColor = new Color8(c.r, c.g, c.b, c.a);
+        m_backgroundColor = new Color8(c.r, c.g, c.b, c.a);
     }
     void Renderer::SetBackgroundColor(const ColorF& c) {
-        if (backgroundColor != nullptr) {
-            delete backgroundColor;
-            backgroundColor = nullptr;
+        if (m_backgroundColor != nullptr) {
+            delete m_backgroundColor;
+            m_backgroundColor = nullptr;
         }
-        backgroundColor = new Color8(c.MakeColor8());
+        m_backgroundColor = new Color8(c.MakeColor8());
     }
 
 	void Renderer::Clear(){
-        SetTempColor(*backgroundColor);
+        SetColor(*m_backgroundColor);
         SDL_RenderClear(m_renderer);
     }
-	void Renderer::DrawPoint(float x, float y) {
-        ChangeCurrentColor();
+	void Renderer::DrawPoint(float x, float y, const Color8 c) const{
+        SetColor(c);
 		SDL_RenderPoint(m_renderer, x, y);
 	}
-    void Renderer::DrawRect(float x, float y, float width, float height, bool shouldFill) {
-        ChangeCurrentColor();
+    void Renderer::DrawRect(float x, float y, float width, float height, const Color8 c, bool shouldFill) const{
+        SetColor(c);
 		SDL_FRect rect{ x, y, width, height };
         if (shouldFill) {
 			SDL_RenderFillRect(m_renderer, &rect);
@@ -109,17 +88,41 @@ namespace bad
             SDL_RenderRect(m_renderer, &rect);
         }
     }
-    void Renderer::DrawLine(float x1, float y1, float x2, float y2) {
-        ChangeCurrentColor();
+    void Renderer::DrawLine(const float x1, const float y1, const float x2, const float y2, const Color8 c) const {
+        SetColor(c);
 		SDL_RenderLine(m_renderer, x1, y1, x2, y2);
     }
-    void Renderer::DrawText(const char* text, float x, float y, int fontSize, const char* fontPath) {
+    void Renderer::DrawText(const char* text, float x, float y, const Color8 c, int fontSize, const char* fontPath) const{
 		if (fontPath == nullptr) {
 			fontPath = "C:/Windows/Fonts/Calibri/calibri.ttf"; // Default font path
 		}
-        ChangeCurrentColor();
+        SetColor(c);
 		SDL_RenderDebugText(m_renderer, x, y, text);
     }
+
+    void Renderer::DrawModel(const Model& model, const Transform2D& transform) const {
+        for (auto mesh : model.GetMeshes()) {
+            auto& points = mesh.GetPoints();
+            for (int i = 0; i + 1< points.size(); i++)
+            {
+                auto v1 = points.at(i);
+                auto v2 = points.at(i + 1);
+
+                v1 *= transform.scale;
+                v2 *= transform.scale;
+
+                v1 = v1.Rotate(transform.rotation * DegToRad);
+                v2 = v2.Rotate(transform.rotation * DegToRad);
+
+                v1 += transform.position;
+                v2 += transform.position;
+
+                DrawLine(v1,v2, mesh.GetColor());
+            }
+        }
+    }
+
+
     void Renderer::Render() {
 		SDL_RenderPresent(m_renderer);
     }

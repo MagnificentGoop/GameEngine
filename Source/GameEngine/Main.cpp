@@ -1,59 +1,28 @@
-//#include <Engine.h> //temporarily commented out
-#include "paint.h" // temporary
+#include "Engine.h"
+#include "Player.h"
 
 int main()
 {
     //INITIALIZATION/*
-    bad::Renderer rend;
+    if (!bad::g_engine.Initialize()) return 1;
 
-
-//Initilazing window
-    bool quit = true;
-    for (int count = 0; count < 6; count++)
-    {
-        quit = rend.Initialize("Window", 1920, 1080);;
-
-        if (count > 4) {
-            std::cerr << "SDL failed to create windows multiple times" << std::endl;
-            return 1;
-        }
-        else if (!quit) {
-            quit = false;
-            break;
-        }
-    }
-
-    //Initializing input object
-    bad::Input input;
-    input.Initialize();
-
-    bad::Time time;
-
-    bad::paint paint; //Temporary paint class that holds paint functions
+    //Initializing Player
+    bad::Color8 color{ 255,255,255 };
+    std::vector<bad::Vector2<float>> points{ {3,0},{-2,2},{-1,0 }, {-2, -2 }, {3, 0 }};
+    bad::Model model;
+    model.AddMesh(bad::Mesh{ points, color });
+    Player player{bad::Transform2D(bad::Vector2<float>(bad::g_engine.GetRenderer().GetWidth() / 2, bad::g_engine.GetRenderer().GetHeight() / 2), 0.0f, bad::Vector2<float>(7.0f, 7.0f)), model};
 
     //INITIALIZATION*/
 
-    while (!quit) {
+    while (!bad::g_engine.GetIfQuit()) {
         //UPDATE*/
-        SDL_Event event;
-        rend.Clear();
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_EVENT_QUIT) {
-                quit = true;
-            }
-        }
-        input.Update();
-        paint.Update(input); //Temporary 
+        player.Update();
         //UPDATE/*
-
         //RENDER*/
-        paint.Render(rend); //Temporary 
-        rend.Render();
+        player.Draw();
+        bad::g_engine.Update();
         //RENDER/*
     }
-    //SHUTDOWN/*
-    rend.Quit();
-
     return 0;
-    //SHUTDOWN*/
 }

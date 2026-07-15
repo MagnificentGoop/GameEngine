@@ -1,18 +1,17 @@
-#include "pch.h"
 #include "Actor.h"
-#include "Renderer.h"
 #include "MathUtils.h"
+#include "Engine.h"
 
 namespace bad {
-	void Actor::Update(float dt, const Renderer& renderer) {
-		m_transform.position += (m_velocity * dt);
-		m_velocity *= 0.987f; //drag???
+	void Actor::Update() {
+		m_transform.position += (m_velocity * bad::g_time.GetDeltaTime());
+		m_velocity *= m_drag;
 
-		Clamp(m_transform.position.x, 0.0f, (float)renderer.GetWidth());
-		Clamp(m_transform.position.y, 0.0f, (float)renderer.GetHeight());
+		Wrap(m_transform.position.x, 0.0f, (float)bad::g_engine.GetRenderer().GetWidth());
+		Wrap(m_transform.position.y, 0.0f, (float)bad::g_engine.GetRenderer().GetHeight());
 	}
 
-	void Actor::Draw(const Renderer& renderer) const {
-
+	void Actor::Draw() const {
+		g_engine.GetRenderer().DrawModel(m_model, m_transform);
 	}
 }
