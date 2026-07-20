@@ -3,6 +3,9 @@
 #include "Actor.h" //Includes Model, Mesh, and transform
 #include "Input.h"
 #include "Color.h" //includes Color8, ColorF, Vector4, Vector3, and Vector2
+#include "Scene.h"
+#include "Random.h"
+#include "MathUtils.h"
 
 #include <iostream>
 

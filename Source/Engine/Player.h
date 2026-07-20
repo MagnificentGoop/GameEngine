@@ -1,16 +1,19 @@
 #pragma once
 #include "Actor.h"
 
+struct PlayerDesc {
+	bad::ActorDesc actorDesc;
+};
+
 class Player : public bad::Actor {
 public:
 	Player() = default;
-	Player(const bad::Transform2D& transform) : Actor(transform) {};
-	Player(const bad::Transform2D& transform, const bad::Model& model) : Actor(transform, model) {};
+	Player(const PlayerDesc& p) : Actor(p.actorDesc) {};
+	Player(const bad::ActorDesc& a) : Actor(a) {};
 
 	void Update();
 	void Draw() const;
 
 
 private:
-	int m_ammo = 0;
 };

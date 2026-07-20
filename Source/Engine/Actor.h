@@ -2,35 +2,36 @@
 
 #include "Model.h"
 #include "Renderer.h"
+#include "SceneObject.h"
+#include <string>
 
 namespace bad {
-	class Actor {
+
+	struct ActorDesc {
+		Vector2<float> velocity = { 0,0 };
+		float drag = 0.988f;
+		float speed = 1000.0f;
+		SceneObjectDesc sceneObject;
+	};
+	class Actor : public SceneObject{
 	public:
 		Actor() = default;
-		Actor(const Transform2D& transform) : m_transform{ transform } {};
-		Actor(const Transform2D& transform, const Model& model) :m_transform{ transform }, m_model{ model } {};
+		Actor(const ActorDesc& a) : SceneObject(a.sceneObject), m_velocity(a.velocity), m_drag(a.drag), m_speed(a.speed) {};
 
 		virtual void Update();
-		virtual void Draw() const;
+		void Draw() const { SceneObject::Draw(); }
 
-		const Transform2D& GetTransoform() { return m_transform; };
-		void SetPosition(const Vector2<float>& position) { m_transform.position = position; };
-		void SetRotatoin(float rotation) { m_transform.rotation = rotation; };
-		float GetRotation() { return m_transform.rotation; }
-		void AddRotation(float a) { m_transform.rotation += a; }
-		void SetScale(float scale) { m_transform.scale = scale; };
+		
 		float GetDrag() { return m_drag; }
 		void SetDrag(float drag) { m_drag = drag; }
 		Vector2<float> GetVelocity() const { return m_velocity; }
 		void SetVelocity(const Vector2<float>& v) { m_velocity = v; }
 		void AddVelocity(const Vector2<float>& v) { m_velocity += v; }
 
-
 	protected:
-		Transform2D m_transform;
-		Vector2<float> m_velocity{ 0,0 };
 
-		Model m_model;
+		Vector2<float> m_velocity{ 0,0 };
 		float m_drag = 0.988f;
+		float m_speed = 1000.0f;
 	};
 }

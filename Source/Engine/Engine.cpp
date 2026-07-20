@@ -23,8 +23,6 @@ namespace bad {
 
 		m_input.Update();
 		g_time.Tick();
-		m_renderer.Render();
-		g_engine.GetRenderer().Clear();
 
 		if(m_quit) bad::g_engine.Shutdown();
 	}
