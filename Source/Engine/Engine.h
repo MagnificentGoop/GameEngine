@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Random.h"
 #include "MathUtils.h"
+#include <fmod.hpp>
 
 #include <iostream>
 
@@ -27,8 +28,10 @@ namespace bad{
 		Renderer m_renderer;
 
 		bool m_quit = false;
+		void* m_extradriverdata = nullptr;
 	};
 
 	extern Engine g_engine;
 	extern Time g_time;
+	extern FMOD::System* g_audio;
 }

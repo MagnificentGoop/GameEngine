@@ -43,6 +43,23 @@ int main()
     scene.AddActor(player);
     scene.AddActor(enemy1);
     scene.AddActor(enemy2);
+
+    //TEMP SOUND STUFF
+    
+    std::vector<FMOD::Sound*> sounds;
+    FMOD::Sound* sound = nullptr;
+
+    bad::g_audio->createSound("sounds/alert.mp3", FMOD_DEFAULT, 0, &sound); sounds.push_back(sound);
+    bad::g_audio->createSound("sounds/duck-toy.mp3", FMOD_DEFAULT, 0, &sound); sounds.push_back(sound);
+    bad::g_audio->createSound("sounds/error.mp3", FMOD_DEFAULT, 0, &sound); sounds.push_back(sound);
+    bad::g_audio->createSound("sounds/hee-hee.mp3", FMOD_DEFAULT, 0, &sound); sounds.push_back(sound);
+    bad::g_audio->createSound("sounds/mario.mp3", FMOD_DEFAULT, 0, &sound); sounds.push_back(sound);
+    bad::g_audio->createSound("sounds/oof.mp3", FMOD_DEFAULT, 0, &sound); sounds.push_back(sound);
+    bad::g_audio->createSound("sounds/scream.mp3", FMOD_DEFAULT, 0, &sound); sounds.push_back(sound);
+    bad::g_audio->createSound("sounds/whistle.mp3", FMOD_DEFAULT, 0, &sound); sounds.push_back(sound);
+
+    //TEMP SOUND STUFF
+
     //INITIALIZATION*/
 
     while (!bad::g_engine.GetIfQuit()) {
@@ -53,6 +70,19 @@ int main()
         //RENDER*/
         scene.Draw();
         //RENDER/*
+
+        //TEMP SOUND STUFF
+
+        if (bad::g_engine.GetInput().GetKeyDown(SDL_SCANCODE_1)) bad::g_audio->playSound(sounds[0], nullptr, false, nullptr);
+        if (bad::g_engine.GetInput().GetKeyDown(SDL_SCANCODE_2)) bad::g_audio->playSound(sounds[1], nullptr, false, nullptr);
+        if (bad::g_engine.GetInput().GetKeyDown(SDL_SCANCODE_3)) bad::g_audio->playSound(sounds[2], nullptr, false, nullptr);
+        if (bad::g_engine.GetInput().GetKeyDown(SDL_SCANCODE_4)) bad::g_audio->playSound(sounds[3], nullptr, false, nullptr);
+        if (bad::g_engine.GetInput().GetKeyDown(SDL_SCANCODE_5)) bad::g_audio->playSound(sounds[4], nullptr, false, nullptr);
+        if (bad::g_engine.GetInput().GetKeyDown(SDL_SCANCODE_6)) bad::g_audio->playSound(sounds[5], nullptr, false, nullptr);
+        if (bad::g_engine.GetInput().GetKeyDown(SDL_SCANCODE_7)) bad::g_audio->playSound(sounds[6], nullptr, false, nullptr);
+        if (bad::g_engine.GetInput().GetKeyDown(SDL_SCANCODE_8)) bad::g_audio->playSound(sounds[7], nullptr, false, nullptr);
+
+        //TEMP SOUND STUFF
     }
     return 0;
 }
