@@ -152,6 +152,7 @@
     <ClCompile Include="Engine.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Source\ThirdParty\SDL3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="File.cpp" />
     <ClCompile Include="Gametime.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="ColorF.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="File.h" />
     <ClInclude Include="Gametime.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="MathUtils.h" />

@@ -5,5 +5,5 @@
 
 void bad::SceneObject::Draw() const
 {
-	g_engine.GetRenderer().DrawModel(m_model, m_transform);
+	Engine::Get().GetRenderer().DrawModel(m_model, m_transform);
 }

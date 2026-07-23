@@ -7,13 +7,14 @@
 #include "Random.h"
 #include "MathUtils.h"
 #include <fmod.hpp>
+#include "File.h"
 
 #include <iostream>
 
 namespace bad{
 	class Engine {
 	public:
-		Engine() = default;
+		static Engine& Get() { static Engine engine; return engine; }
 
 		bool Initialize();
 		void Shutdown();
@@ -24,6 +25,7 @@ namespace bad{
 		Renderer& GetRenderer() { return m_renderer; }
 		bool GetIfQuit() { return m_quit; }
 	private:
+		Engine() = default;
 		Input m_input;
 		Renderer m_renderer;
 
@@ -31,7 +33,6 @@ namespace bad{
 		void* m_extradriverdata = nullptr;
 	};
 
-	extern Engine g_engine;
 	extern Time g_time;
 	extern FMOD::System* g_audio;
 }

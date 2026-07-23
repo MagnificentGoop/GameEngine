@@ -4,18 +4,18 @@
 
 namespace bad {
 	void Scene::Update() {
-		bad::g_engine.Update();
-		for (Actor* actor : m_actors)
+		bad::Engine::Get().Update();
+		for (SceneObject* object : m_objects)
 		{
-			actor->Update();
+			object->Update();
 		}
 	}
 
 	void Scene::Draw() {
-		g_engine.GetRenderer().Clear();
-		for (Actor* actor : m_actors) {
-			actor->Draw();
+		Engine::Get().GetRenderer().Clear();
+		for (SceneObject* object : m_objects) {
+			object->Draw();
 		}
-		g_engine.GetRenderer().Render();
+		Engine::Get().GetRenderer().Render();
 	}
 }

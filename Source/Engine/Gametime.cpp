@@ -15,8 +15,4 @@ namespace bad {
 		m_deltaTicks = m_currentTicks - m_frameTicks;
 		m_frameTicks = m_currentTicks;
 	}
-
-	//ticks = SDL_GetTicksNS(); //1000 tics/second
-//float seconds = (float)ticks / 1'000'000'000;
-//float deltaTime = (float)(ticks - prevTicks) / 1'000'000'000;
 }

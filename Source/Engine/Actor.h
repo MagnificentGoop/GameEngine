@@ -9,7 +9,7 @@ namespace bad {
 
 	struct ActorDesc {
 		Vector2<float> velocity = { 0,0 };
-		float drag = 0.988f;
+		float drag = 0.3f;
 		float speed = 1000.0f;
 		SceneObjectDesc sceneObject;
 	};
@@ -31,7 +31,7 @@ namespace bad {
 	protected:
 
 		Vector2<float> m_velocity{ 0,0 };
-		float m_drag = 0.988f;
-		float m_speed = 1000.0f;
+		float m_drag;
+		float m_speed;
 	};
 }

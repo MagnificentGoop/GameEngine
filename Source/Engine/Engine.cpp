@@ -2,7 +2,6 @@
 
 namespace bad {
 
-	Engine g_engine;
 	Time g_time;
 	FMOD::System* g_audio;
 	bool Engine::Initialize(){
@@ -28,6 +27,6 @@ namespace bad {
 		g_time.Tick();
 		g_audio->update();
 
-		if(m_quit) bad::g_engine.Shutdown();
+		if(m_quit) bad::Engine::Get().Shutdown();
 	}
 }

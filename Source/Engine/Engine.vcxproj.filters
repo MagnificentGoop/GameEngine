@@ -47,6 +47,9 @@
     <ClCompile Include="SceneObject.cpp">
       <Filter>Source\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -110,6 +113,9 @@
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="SceneObject.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="File.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>

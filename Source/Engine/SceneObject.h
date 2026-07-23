@@ -5,6 +5,7 @@
 #include <string>
 
 namespace bad {
+	class Scene;
 
 	struct SceneObjectDesc {
 		std::string name = "NONE";
@@ -21,10 +22,11 @@ namespace bad {
 			m_transform{ a.transform },
 			m_model{ a.model } {};
 
+		virtual void Update() {};
 		void Draw() const;
 
 		const void SetTransform(const Transform2D& t) { m_transform = t; }
-		const Transform2D& GetTransoform() const { return m_transform; }
+		const Transform2D& GetTransform() const { return m_transform; }
 		const void SetPosition(const Vector2<float>& position) { m_transform.position = position; };
 		const Vector2<float> GetPosition() { return m_transform.position; }
 		const void SetRotatoin(float rotation) { m_transform.rotation = rotation; };
@@ -39,10 +41,13 @@ namespace bad {
 		const std::vector<std::string>& GetTags() const { return m_tags; }
 		const void AddTag(const std::string s) { m_tags.push_back(s); }
 
+		friend Scene;
 	protected:
 		std::string m_name = "Default";
 		std::vector<std::string> m_tags;
 		Transform2D m_transform;
 		Model m_model;
+
+		Scene* m_scene = nullptr;
 	};
 }

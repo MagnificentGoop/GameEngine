@@ -5,10 +5,24 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Source\Headers">
+      <UniqueIdentifier>{e68f90b2-8edc-4506-bcba-71c7612be2f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Cpp">
+      <UniqueIdentifier>{ca8d3c9e-9670-4341-82a2-ac76e317d8b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Assets.cpp">
+      <Filter>Source\Cpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Assets.h">
+      <Filter>Source\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
